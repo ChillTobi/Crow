@@ -337,15 +337,15 @@ ISR(TIMER1_OVF_vect)
 		 the respective other half will be filled */
 		if(u8AudioPtr == 0)
 		{
-			u8BufferState= FILL_UPPER;
+			eBufferState= FILL_UPPER;
 		}
 		else if(u8AudioPtr == (AUDIO_BUFFER_SIZE/2))
 		{
-			u8BufferState= FILL_LOWER;
+			eBufferState= FILL_LOWER;
 		}
 		else
 		{
-			u8BufferState= FILLED;
+			eBufferState= FILLED;
 		}
 	}
 	
