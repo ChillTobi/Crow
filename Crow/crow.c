@@ -23,8 +23,6 @@ volatile static uint8_t u8HeadPosition= 0;
 
 static uint8_t		u8NumEyes= 2;
 static E_EYE_MODE	eEye= EYE_BLINK;
-static uint8_t		u8EyeBrightness= 0;
-
 static uint32_t		u32EyeColor= COLOR_BLOODRED;
 
 /****************************************************************/
@@ -38,7 +36,7 @@ void CROW_Init(void)
 	u16BreakTimer= 10;
 	eCrowMode= CROW_INIT;
 	
-	SERVO_SetPwm(127);
+	
 }
 
 
@@ -66,6 +64,7 @@ void CROW_Task(void)
 			LED_SetColorAll(0);
 			LED_Update();
 			
+			SERVO_SetAngle(45);
 		}
 		else
 		{
@@ -144,15 +143,15 @@ void CROW_Task(void)
 			}
 			else
 			{
-				/* generate a random number between 0 and 1023, offset is 3sec thus the time between blink is
+				/* generate a random number between 0 and 1023, offset is 3sec thus the time between head movement is
 				between 3sec and 13.2s */
-				u16HeadTimer= rand() % 0x02FF + CROW_HEAD_TIME_OFFSET;
+				u16HeadTimer= rand() % 0x03FF + CROW_HEAD_TIME_OFFSET;
 		
-				/* the head default position is 127 equals locking in forward direction 
+				/* the head default position is 45° equals locking in forward direction 
 				the first generated random is for the coarse head position (left, middle, right) while the second one 
 				is for the absolute position */
-				u8HeadPosition= ((rand() % 3) - 1) * (rand() % 100) + 127;
-				SERVO_SetPwm(u8HeadPosition);
+				u8HeadPosition= ((int8_t)(rand() % 3) - 1) * (rand() % 45) + 45;
+				SERVO_SetAngle(u8HeadPosition);
 			}
 			
 		break;

@@ -159,6 +159,35 @@ void AUDIO_Task(void)
 					{
 						;
 					}
+					
+					/* write lower half of the buffer */
+					if(eBufferState == FILL_LOWER)
+					{
+						u16Temp= u16AudioTimeStep + (AUDIO_BUFFER_SIZE/2);
+						
+						for(u8Idx= 0; u8Idx < (AUDIO_BUFFER_SIZE/2); ++u8Idx)
+						{
+							u8Buffer[u8Idx]= pgm_read_byte(&ptr8AudioFile[u16Temp+u8Idx]);
+						}
+						
+						eBufferState= FILLED;
+					}
+					/* write upper half of the buffer */
+					else if(eBufferState == FILL_UPPER)
+					{
+						u16Temp= u16AudioTimeStep + (AUDIO_BUFFER_SIZE/2);
+						
+						for(u8Idx= AUDIO_BUFFER_SIZE/2; u8Idx < AUDIO_BUFFER_SIZE; ++u8Idx)
+						{
+							u8Buffer[u8Idx]= AUDIO_DDS(u16Phase);
+						}
+						
+						eBufferState= FILLED;
+					}
+					else
+					{
+						;
+					}
 		
 				break;
 		
@@ -279,10 +308,16 @@ void AUDIO_SetFile(uint8_t *ptrFile)
 	uint16_t u16Idx= 0;
 	
 	ptr8AudioFile= ptrFile;
-	u16AudioFileSize= sizeof(ptr8AudioFile);
+	u16AudioFileSize= sizeof(ptr8AudioFile) + AUDIO_BUFFER_SIZE;
 	
 	u8AudioPtr= 0;
 	u16AudioTimeStep= 0;
+	
+	/* play nothing at first, this is  */
+	for(;u16Idx < (AUDIO_BUFFER_SIZE/2); ++u16Idx)
+	{
+		u8Buffer[u16Idx]= AUDIO_RESOLUTION/2;
+	}
 	
 	for(;u16Idx < AUDIO_BUFFER_SIZE; ++u16Idx)
 	{
@@ -301,10 +336,13 @@ static void ADUIO_ClearBuffer(void)
 	
 	u8AudioPtr= 0;
 	u16AudioTimeStep= 0;
+	
 	for(;u16Idx < AUDIO_BUFFER_SIZE; ++u16Idx)
 	{
 		u8Buffer[u16Idx]= 0;
 	}
+	
+	eBufferState= EMPTY;
 }
 
 
@@ -330,7 +368,6 @@ ISR(TIMER1_OVF_vect)
 	}
 	else
 	{
-		
 		++u8AudioPtr;
 		
 		/* Fill half of the buffer, depending if reading from the upper or lower half,
@@ -348,6 +385,4 @@ ISR(TIMER1_OVF_vect)
 			eBufferState= FILLED;
 		}
 	}
-	
-	
 }

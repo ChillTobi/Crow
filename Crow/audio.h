@@ -21,6 +21,9 @@
 #define AUDIO_SAMPLE_FREQ	(uint32_t)78125
 #define AUDIO_BUFFER_SIZE	256
 
+#define AUDIO_SAMPLE_DEEPTH	8
+#define AUDIO_RESOLUTION	(1<<AUDIO_SAMPLE_DEEPTH)
+
 #define AUDIO_DDS_SIZE		1024
 
 /****************************************************************/

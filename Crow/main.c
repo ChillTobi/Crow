@@ -29,14 +29,8 @@ void SYS_Init(void);
 
 volatile static uint8_t	u8Tick10ms= 0;
 volatile static uint8_t	u16Tick1s= 0;
-
-volatile static uint8_t u8ServoPwm= 128;
 volatile static uint16_t u16WaitCounter= 0;
 
-volatile static uint8_t u8HeadMovementSeq[16][16]= {0};
-	
-	
-volatile static uint8_t u8LedMode= 0;
 
 /****************************************************************/
 
@@ -68,7 +62,6 @@ int main(void)
 			
 			CROW_Task();
 			LED_Task();
-			
 		}
 		
 	
@@ -78,8 +71,7 @@ int main(void)
 			u16Tick1s= 0;	
 		}
 		
-		AUDIO_Task();
-		
+		AUDIO_Task();	
     }
 }
 
