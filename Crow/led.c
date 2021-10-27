@@ -252,7 +252,6 @@ ISR(SPI_STC_vect)
 	
 	if(u8LedIndex < u8NumOfLeds)
 	{
-		//u8PtrTemp= &stLed[u8LedIndex].u8Data[u8LedRegisterIndex];
 		u8Temp= stLed[u8LedIndex].u8Data[u8LedRegisterIndex];
 		SPI_TransmitIT(u8Temp);
 	}

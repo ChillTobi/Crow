@@ -55,7 +55,7 @@
 
 #define COLOR_ORANGE    0x000028E6
 #define COLOR_BLOODRED  0x00000020
-#define COLOR_PURPLE    0x00F80026
+#define COLOR_PURPLE    0x002C0046
 
 
 /****************************************************************/

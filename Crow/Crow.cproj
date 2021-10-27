@@ -151,6 +151,12 @@
     <Compile Include="crow_audio.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="dio.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="dio.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="led.c">
       <SubType>compile</SubType>
     </Compile>

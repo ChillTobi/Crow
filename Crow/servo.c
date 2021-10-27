@@ -7,11 +7,9 @@
 
 #include "servo.h"
 
-
 /****************************************************************/
 
 static uint8_t u8Offset= 0;
-
 volatile static uint8_t u8PwmServo= 0;
 
 

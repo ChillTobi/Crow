@@ -11,6 +11,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+
+#include "dio.h"
 #include "servo.h"
 #include "led.h"
 #include "audio.h"
@@ -42,13 +44,14 @@ int main(void)
 {
 	
 	/*********************************************/
-	SYS_Init();
-
+	DIO_Init();
 	LED_Init();
 	SERVO_Init();
 	AUDIO_Init();
 	
 	CROW_Init();
+	
+	SYS_Init();
 	
 	/*********************************************/
     /* Replace with your application code */
@@ -84,25 +87,6 @@ int main(void)
 void SYS_Init(void)
 {
 	cli();
-	
-	/*****************************************/
-	/* 
-	PB5:	SCK
-	PB3:	MOSI
-	PB2:	SS (must be activated for SPI Master mode)
-	PB1:	OC1A (Audio-DAC)
-	PB0:	Debug-I/O
-	*/
-	DDRB= 0x2F;
-	PORTB= 0;
-	
-	/*
-	PD6:	PWM
-	*/
-	DDRD= 0x40;
-	PORTD= 0;
-	/*****************************************/
-	
 	
 	/*****************************************/
 	/* Timer 1 - Timebase 1ms */
